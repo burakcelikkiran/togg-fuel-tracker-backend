@@ -7,21 +7,23 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class Customer extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
+        'api_token',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
+        'api_token', // Token'ı JSON çıktısında gizle
     ];
 
     protected function casts(): array
@@ -46,6 +48,32 @@ class Customer extends Authenticatable
     public function verificationCode(): HasOne
     {
         return $this->hasOne(VerificationCode::class)->latest();
+    }
+
+    // API Token işlemleri
+    public static function generateApiToken(): string
+    {
+        return Str::random(64);
+    }
+
+    public function createApiToken(): string
+    {
+        $token = self::generateApiToken();
+        $this->api_token = $token;
+        $this->save();
+
+        return $token;
+    }
+
+    public function rotateApiToken(): string
+    {
+        return $this->createApiToken();
+    }
+
+    public function revokeApiToken(): void
+    {
+        $this->api_token = null;
+        $this->save();
     }
 
     // E-posta doğrulanmış mı kontrolü

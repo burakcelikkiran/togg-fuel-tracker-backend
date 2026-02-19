@@ -10,7 +10,7 @@ class VehicleController extends Controller
 {
     public function index()
     {
-        $vehicles = Auth::guard('customer')->user()->vehicles()->orderBy('is_active', 'desc')->get();
+        $vehicles = request()->user()->vehicles()->orderBy('is_active', 'desc')->get();
         return response()->json($vehicles);
     }
 
@@ -26,7 +26,7 @@ class VehicleController extends Controller
             'kilometer' => 'nullable|integer|min:0',
         ]);
 
-        $customer = Auth::guard('customer')->user();
+        $customer = request()->user();
 
         // İlk araç otomatik aktif olsun
         $userVehicleCount = $customer->vehicles()->count();
@@ -48,7 +48,7 @@ class VehicleController extends Controller
 
     public function update(Request $request, $id)
     {
-        $vehicle = Auth::guard('customer')->user()->vehicles()->findOrFail($id);
+        $vehicle = request()->user()->vehicles()->findOrFail($id);
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -67,7 +67,7 @@ class VehicleController extends Controller
 
     public function destroy($id)
     {
-        $vehicle = Auth::guard('customer')->user()->vehicles()->findOrFail($id);
+        $vehicle = request()->user()->vehicles()->findOrFail($id);
         $vehicle->delete();
 
         return response()->json(['message' => 'Vehicle deleted']);
@@ -75,7 +75,7 @@ class VehicleController extends Controller
 
     public function setCurrent(Request $request, $id)
     {
-        $customer = Auth::guard('customer')->user();
+        $customer = request()->user();
         $vehicle = $customer->vehicles()->findOrFail($id);
 
         // Tüm araçları pasif yap

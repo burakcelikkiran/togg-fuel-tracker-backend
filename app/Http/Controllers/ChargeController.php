@@ -13,7 +13,7 @@ class ChargeController extends Controller
 {
     public function index(Request $request)
     {
-        $activeVehicle = Auth::guard('customer')->user()->vehicles()->active()->first();
+        $activeVehicle = request()->user()->vehicles()->active()->first();
 
         if (!$activeVehicle) {
             return response()->json([]);
@@ -62,7 +62,7 @@ class ChargeController extends Controller
             'charge_percentage' => 'nullable|integer|min:0|max:100',
         ]);
 
-        $customer = Auth::guard('customer')->user();
+        $customer = request()->user();
         $activeVehicle = $customer->vehicles()->active()->first();
 
         if (!$activeVehicle) {
@@ -98,7 +98,7 @@ class ChargeController extends Controller
             'charge_percentage' => 'nullable|integer|min:0|max:100',
         ]);
 
-        $charge = Auth::guard('customer')->user()->charges()->findOrFail($id);
+        $charge = request()->user()->charges()->findOrFail($id);
 
         // Firma eşleniyor mu kontrol et
         $company = Company::where('name', $request->company)->first();
@@ -118,7 +118,7 @@ class ChargeController extends Controller
 
     public function destroy($id)
     {
-        $charge = Auth::guard('customer')->user()->charges()->findOrFail($id);
+        $charge = request()->user()->charges()->findOrFail($id);
         $charge->delete();
 
         return response()->json(['message' => 'Charge deleted']);

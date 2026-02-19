@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\VerificationCode;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -27,25 +26,31 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // 6 haneli doğrulama kodu oluştur
+        // API token oluştur
+        $apiToken = $customer->createApiToken();
+
+        // Doğrulama kodu oluştur
         $code = str_pad((string) random_int(0, 999999), 6, '0');
 
         VerificationCode::create([
             'customer_id' => $customer->id,
             'code' => $code,
-            'expires_at' => now()->addMinutes(15), // 15 dakika geçerli
+            'expires_at' => now()->addMinutes(15),
         ]);
 
-        // E-posta gönder
         Mail::to($customer->email)->send(new \App\Mail\VerificationCodeMail($code, $customer->name));
 
         return response()->json([
+            'success' => true,
             'message' => 'Kayıt başarılı. Lütfen e-posta adresinize gönderilen doğrulama kodunu girin.',
-            'customer_id' => $customer->id,
+            'data' => [
+                'customer_id' => $customer->id,
+                'api_token' => $apiToken, // Token sadece burada gösterilir
+            ],
         ], 201);
     }
 
-    public function verify(Request $request)
+    public function verify(Request $request): JsonResponse
     {
         $request->validate([
             'customer_id' => 'required|integer|exists:customers,id',
@@ -68,16 +73,21 @@ class AuthController extends Controller
         $verification->save();
 
         $customer = Customer::find($request->customer_id);
-        $token = $customer->createToken('auth-token')->plainTextToken;
 
         return response()->json([
+            'success' => true,
             'message' => 'E-posta başarıyla doğrulandı.',
-            'token' => $token,
-            'customer' => $customer,
+            'data' => [
+                'customer' => [
+                    'id' => $customer->id,
+                    'name' => $customer->name,
+                    'email' => $customer->email,
+                ],
+            ],
         ]);
     }
 
-    public function resendCode(Request $request)
+    public function resendCode(Request $request): JsonResponse
     {
         $request->validate([
             'customer_id' => 'required|integer|exists:customers,id',
@@ -85,12 +95,10 @@ class AuthController extends Controller
 
         $customer = Customer::find($request->customer_id);
 
-        // Eski doğrulama kodunu iptal et
         VerificationCode::where('customer_id', $customer->id)
             ->whereNull('verified_at')
             ->delete();
 
-        // Yeni kod oluştur
         $code = str_pad((string) random_int(0, 999999), 6, '0');
 
         VerificationCode::create([
@@ -102,11 +110,12 @@ class AuthController extends Controller
         Mail::to($customer->email)->send(new \App\Mail\VerificationCodeMail($code, $customer->name));
 
         return response()->json([
+            'success' => true,
             'message' => 'Yeni doğrulama kodu e-posta adresinize gönderildi.',
         ]);
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $request->validate([
             'email' => 'required|email',
@@ -121,26 +130,49 @@ class AuthController extends Controller
             ]);
         }
 
-        // Eski token'ları temizle
-        $customer->tokens()->delete();
-
-        $token = $customer->createToken('auth-token')->plainTextToken;
+        // Token yoksa oluştur
+        if (!$customer->api_token) {
+            $customer->createApiToken();
+            $customer->refresh();
+        }
 
         return response()->json([
-            'token' => $token,
-            'customer' => $customer,
+            'success' => true,
+            'data' => [
+                'api_token' => $customer->api_token,
+                'customer' => [
+                    'id' => $customer->id,
+                    'name' => $customer->name,
+                    'email' => $customer->email,
+                ],
+            ],
         ]);
     }
 
-    public function logout(Request $request)
+    public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        // Token'ı iptal et
+        $request->user()->revokeApiToken();
 
-        return response()->json(['message' => 'Çıkış başarılı']);
+        return response()->json([
+            'success' => true,
+            'message' => 'Çıkış başarılı, token iptal edildi.',
+        ]);
     }
 
-    public function user(Request $request)
+    public function user(Request $request): JsonResponse
     {
-        return response()->json($request->user());
+        $user = $request->user();
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'customer' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ],
+            ],
+        ]);
     }
 }

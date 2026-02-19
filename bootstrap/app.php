@@ -22,8 +22,27 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Http\Middleware\HandleCors::class,
             \App\Http\Middleware\RequestId::class,
         ]);
+
+        // Redirect guest users to JSON response for API
+        $middleware->redirectGuestsTo(fn () => null);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        // Handle authentication exceptions for API
+        $exceptions->render(function (AuthenticationException $e, Request $request): ?JsonResponse {
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Authentication is required to access this resource.',
+                    'error_code' => ErrorCode::UNAUTHENTICATED->value,
+                ], 401);
+            }
+            return null;
+        });
+
+        $exceptions->shouldRenderJsonWhen(function (Request $request, \Throwable $e) {
+            return $request->is('api/*') || $request->expectsJson();
+        });
+
         $exceptions->render(function (\Throwable $e, Request $request): ?JsonResponse {
             // Only handle API requests
             if (!$request->expectsJson() && !$request->is('api/*')) {

@@ -6,6 +6,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Middleware\ApiToken;
 use Illuminate\Support\Facades\Route;
 
 // Public routes
@@ -14,8 +15,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/verify', [AuthController::class, 'verify']);
 Route::post('/resend-code', [AuthController::class, 'resendCode']);
 
-// Protected routes (Customer API)
-Route::middleware('auth:customer')->group(function () {
+// Protected routes - API Token ile giriş
+Route::middleware(ApiToken::class)->group(function () {
     // Auth
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);

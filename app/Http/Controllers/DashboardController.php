@@ -10,7 +10,7 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $customer = Auth::guard('customer')->user();
+        $customer = request()->user();
 
         // Aktif araç
         $activeVehicle = $customer->vehicles()->active()->first();

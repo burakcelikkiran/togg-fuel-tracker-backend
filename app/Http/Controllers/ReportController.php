@@ -9,7 +9,7 @@ class ReportController extends Controller
 {
     public function index()
     {
-        $activeVehicle = Auth::guard('customer')->user()->vehicles()->active()->first();
+        $activeVehicle = request()->user()->vehicles()->active()->first();
 
         if (!$activeVehicle) {
             return response()->json([
