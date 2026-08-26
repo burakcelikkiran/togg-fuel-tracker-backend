@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Charge;
+use App\Models\Drive;
 use App\Models\Vehicle;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +25,11 @@ class DashboardController extends Controller
                 'monthly_trend' => [],
                 'company_distribution' => [],
                 'recent_charges' => [],
+                // Sürüş istatistikleri
+                'total_drives' => 0,
+                'total_distance_km' => 0,
+                'avg_consumption_kwh_per_km' => 0,
+                'recent_drives' => [],
             ]);
         }
 
@@ -73,6 +79,30 @@ class DashboardController extends Controller
                 'amount' => (float) $charge->amount,
             ]);
 
+        // Sürüş istatistikleri
+        $totalDrives = $customer->drives()->count();
+        $totalDistanceKm = (float) $customer->drives()->sum('distance_km');
+        $avgConsumptionKwhPerKm = $customer->drives()->avg('consumption_kwh_per_km');
+
+        // Son sürüş kayıtları (3 adet)
+        $recentDrives = $customer->drives()
+            ->with('vehicle')
+            ->orderBy('driven_at', 'desc')
+            ->limit(3)
+            ->get()
+            ->map(fn ($drive) => [
+                'id' => $drive->id,
+                'driven_at' => $drive->driven_at->format('Y-m-d'),
+                'duration_minutes' => $drive->duration_minutes,
+                'distance_km' => (float) $drive->distance_km,
+                'avg_speed' => (float) $drive->avg_speed,
+                'vehicle' => [
+                    'id' => $drive->vehicle->id,
+                    'name' => $drive->vehicle->name,
+                    'plate' => $drive->vehicle->plate,
+                ],
+            ]);
+
         return response()->json([
             'total_amount' => $totalAmount,
             'total_kwh' => $totalKwh,
@@ -81,6 +111,11 @@ class DashboardController extends Controller
             'monthly_trend' => $monthlyTrend,
             'company_distribution' => $companyDistribution,
             'recent_charges' => $recentCharges,
+            // Sürüş istatistikleri
+            'total_drives' => $totalDrives,
+            'total_distance_km' => $totalDistanceKm,
+            'avg_consumption_kwh_per_km' => $avgConsumptionKwhPerKm ? (float) $avgConsumptionKwhPerKm : 0,
+            'recent_drives' => $recentDrives,
         ]);
     }
 }

@@ -1,0 +1,87 @@
+{
+  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/js/Layouts/AppLayout.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/Layouts/AppSidebar.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/Pages/Auth/Login.tsx": [
+    "/build/assets/Login-YLD7tYwm.js"
+  ],
+  "resources/js/Pages/Auth/Register.tsx": [
+    "/build/assets/Register-TeOi6KMa.js"
+  ],
+  "resources/js/Pages/Auth/VerifyEmail.tsx": [
+    "/build/assets/VerifyEmail-CZE2u0xn.js"
+  ],
+  "resources/js/Pages/Charges/Create.tsx": [
+    "/build/assets/Create-D_CrZBFl.js"
+  ],
+  "resources/js/Pages/Charges/Index.tsx": [
+    "/build/assets/Index-a1wYigAR.js"
+  ],
+  "resources/js/Pages/Dashboard.tsx": [
+    "/build/assets/Dashboard-ZjEgqyKJ.js"
+  ],
+  "resources/js/Pages/Landing.tsx": [
+    "/build/assets/Landing-D_l0gRg6.js"
+  ],
+  "resources/js/Pages/Reports.tsx": [
+    "/build/assets/Reports-CvmsG9wW.js"
+  ],
+  "resources/js/Pages/Vehicles/Index.tsx": [
+    "/build/assets/Index-Bz8_SKfg.js"
+  ],
+  "resources/js/components/VehicleSelector.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/components/ui/alert-dialog.tsx": [
+    "/build/assets/Index-Bz8_SKfg.js"
+  ],
+  "resources/js/components/ui/badge.tsx": [
+    "/build/assets/Index-Bz8_SKfg.js"
+  ],
+  "resources/js/components/ui/button.tsx": [
+    "/build/assets/button-CIlhfeS0.js"
+  ],
+  "resources/js/components/ui/card.tsx": [
+    "/build/assets/card-CWhze8JT.js"
+  ],
+  "resources/js/components/ui/dialog.tsx": [
+    "/build/assets/dialog-6lCd8JO8.js"
+  ],
+  "resources/js/components/ui/input.tsx": [
+    "/build/assets/card-CWhze8JT.js"
+  ],
+  "resources/js/components/ui/label.tsx": [
+    "/build/assets/label-CNvk9rvV.js"
+  ],
+  "resources/js/components/ui/select.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/components/ui/separator.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/components/ui/sheet.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/components/ui/sidebar.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/components/ui/skeleton.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/components/ui/table.tsx": [
+    "/build/assets/Index-Bz8_SKfg.js"
+  ],
+  "resources/js/components/ui/tooltip.tsx": [],
+  "resources/js/hooks/use-mobile.tsx": [
+    "/build/assets/AppLayout-DKRAsidd.js"
+  ],
+  "resources/js/lib/date-utils.ts": [
+    "/build/assets/date-utils-D-W88WyC.js"
+  ],
+  "resources/js/lib/utils.ts": [],
+  "resources/js/ssr.tsx": []
+}

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChargeController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DriveController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\ApiToken;
@@ -34,6 +35,13 @@ Route::middleware(ApiToken::class)->group(function () {
     Route::put('/charges/{id}', [ChargeController::class, 'update']);
     Route::delete('/charges/{id}', [ChargeController::class, 'destroy']);
     Route::post('/parse-charge-receipt', [ChargeController::class, 'parseReceipt']);
+
+    // Drives
+    Route::get('/drives', [DriveController::class, 'index']);
+    Route::post('/drives', [DriveController::class, 'store']);
+    Route::get('/drives/{id}', [DriveController::class, 'show']);
+    Route::put('/drives/{id}', [DriveController::class, 'update']);
+    Route::delete('/drives/{id}', [DriveController::class, 'destroy']);
 
     // Dashboard & Reports
     Route::get('/dashboard', [DashboardController::class, 'index']);

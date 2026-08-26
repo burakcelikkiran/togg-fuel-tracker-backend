@@ -45,6 +45,11 @@ class Customer extends Authenticatable
         return $this->hasMany(Charge::class);
     }
 
+    public function drives(): HasMany
+    {
+        return $this->hasMany(Drive::class);
+    }
+
     public function verificationCode(): HasOne
     {
         return $this->hasOne(VerificationCode::class)->latest();

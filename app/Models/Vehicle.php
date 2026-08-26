@@ -45,6 +45,11 @@ class Vehicle extends Model
         return $this->hasMany(Charge::class);
     }
 
+    public function drives(): HasMany
+    {
+        return $this->hasMany(Drive::class);
+    }
+
     // Scope: Aktif araç
     public function scopeActive($query)
     {
