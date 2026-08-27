@@ -1,6 +1,7 @@
-import { LayoutDashboard, PlusCircle, History, BarChart3, LogOut, Zap, Car } from 'lucide-react';
+import { LayoutDashboard, PlusCircle, History, BarChart3, LogOut, Car } from 'lucide-react';
 import { Link, router, usePage } from '@inertiajs/react';
 import { VehicleSelector } from '@/components/VehicleSelector';
+import { Logo } from '@/components/Logo';
 import {
     Sidebar,
     SidebarContent,
@@ -39,12 +40,10 @@ export function AppSidebar({ vehicles, activeVehicle }: AppSidebarProps) {
 
     return (
         <Sidebar className="border-r border-sidebar-border">
-            <div className="flex items-center gap-2 px-4 py-5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-                    <Zap className="h-5 w-5 text-primary-foreground" />
-                </div>
+            <div className="flex items-center gap-2.5 px-4 py-5">
+                <Logo size={40} />
                 <div>
-                    <h2 className="text-sm font-bold text-foreground">EV Şarj Takip</h2>
+                    <h2 className="text-sm font-bold text-foreground">Togg Charge Tracker</h2>
                     <p className="text-xs text-muted-foreground">Şarj harcamalarınız</p>
                 </div>
             </div>

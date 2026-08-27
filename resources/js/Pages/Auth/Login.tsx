@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Zap } from 'lucide-react';
+import { Logo } from '@/components/Logo';
 
 export default function Login() {
     const { data, setData, post, processing, errors } = useForm({
@@ -22,10 +22,8 @@ export default function Login() {
             <div className="flex min-h-screen items-center justify-center bg-background p-4">
                 <Card className="w-full max-w-md">
                     <CardHeader className="text-center">
-                        <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-primary">
-                            <Zap className="h-6 w-6 text-primary-foreground" />
-                        </div>
-                        <CardTitle className="text-2xl">EV Şarj Takip</CardTitle>
+                        <Logo size={96} variant="full" className="mx-auto mb-3" />
+                        <CardTitle className="text-2xl">Togg Charge Tracker</CardTitle>
                         <CardDescription>Hesabınıza giriş yapın</CardDescription>
                     </CardHeader>
                     <form onSubmit={submit}>

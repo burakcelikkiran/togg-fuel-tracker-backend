@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Mail, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import { Logo } from '@/components/Logo';
 import { PageProps } from '@/types';
 
 interface VerifyEmailProps extends PageProps {
@@ -58,9 +59,7 @@ export default function VerifyEmail({ customerId }: VerifyEmailProps) {
             <div className="flex min-h-screen items-center justify-center bg-background p-4">
                 <Card className="w-full max-w-md">
                     <CardHeader className="text-center">
-                        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                            <Mail className="h-8 w-8 text-primary" />
-                        </div>
+                        <Logo size={80} variant="full" className="mx-auto mb-4" />
                         <CardTitle className="text-2xl">E-posta Doğrulama</CardTitle>
                         <CardDescription>
                             E-posta adresinize gönderilen 6 haneli kodu girin

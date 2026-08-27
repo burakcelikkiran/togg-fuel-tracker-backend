@@ -14,6 +14,7 @@ import {
   Clock,
   Download,
 } from "lucide-react";
+import { Logo } from '@/components/Logo';
 import type { Easing } from "framer-motion";
 
 const ease: Easing = [0.25, 0.1, 0.25, 1];
@@ -83,12 +84,10 @@ const Landing = () => {
         className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl"
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/25">
-              <Zap className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="text-lg font-bold">EV Şarj Takip</span>
-          </div>
+          <Link href="/" className="flex items-center gap-2.5">
+            <Logo size={40} />
+            <span className="text-sm font-bold sm:text-lg">Togg Charge Tracker</span>
+          </Link>
           <div className="flex items-center gap-3">
             <Button variant="ghost" asChild>
               <Link href="/login">Giriş Yap</Link>
@@ -122,6 +121,23 @@ const Landing = () => {
             initial="hidden"
             animate="visible"
             custom={0}
+            className="mb-8 flex justify-center"
+          >
+            <div className="relative">
+              <div className="absolute -inset-8 rounded-full bg-primary/20 blur-3xl" />
+              <Logo
+                variant="full"
+                size={220}
+                className="relative h-40 w-40 drop-shadow-2xl sm:h-52 sm:w-52 md:h-56 md:w-56"
+              />
+            </div>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.5}
             className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-sm text-primary"
           >
             <Zap className="h-3.5 w-3.5" />
@@ -195,7 +211,7 @@ const Landing = () => {
             viewport={{ once: true, margin: "-100px" }}
             className="mb-16 text-center"
           >
-            <h2 className="text-3xl font-bold sm:text-4xl">Neden EV Şarj Takip?</h2>
+            <h2 className="text-3xl font-bold sm:text-4xl">Neden Togg Charge Tracker?</h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
               Elektrikli araç sahipleri için tasarlanmış, şarj harcamalarınızı kontrol altında tutan kapsamlı platform.
             </p>
@@ -369,10 +385,8 @@ const Landing = () => {
                   {/* Screen content */}
                   <div className="flex h-full flex-col p-4 pt-10">
                     <div className="mb-4 flex items-center gap-2">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-                        <Zap className="h-4 w-4 text-primary-foreground" />
-                      </div>
-                      <span className="text-sm font-bold">EV Şarj Takip</span>
+                      <Logo size={32} />
+                      <span className="text-sm font-bold">Togg Charge Tracker</span>
                     </div>
 
                     <div className="mb-4 rounded-xl border border-border bg-background p-3">
@@ -470,13 +484,11 @@ const Landing = () => {
       <footer className="border-t border-border px-6 py-8">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <Zap className="h-4 w-4 text-primary-foreground" />
-            </div>
-            <span className="text-sm font-semibold">EV Şarj Takip</span>
+            <Logo size={32} />
+            <span className="text-sm font-semibold">Togg Charge Tracker</span>
           </div>
           <p className="text-xs text-muted-foreground">
-            © 2026 Kapital Online Tüm hakları saklıdır.
+            © {new Date().getFullYear()} Groovie. Tüm hakları saklıdır.
           </p>
         </div>
       </footer>

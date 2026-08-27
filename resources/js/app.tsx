@@ -6,7 +6,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 
-const appName = import.meta.env.VITE_APP_NAME || 'EV Şarj Takip';
+const appName = import.meta.env.VITE_APP_NAME || 'Togg Charge Tracker';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),

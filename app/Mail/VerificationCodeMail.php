@@ -20,7 +20,7 @@ class VerificationCodeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'EV Şarj Takip - E-posta Doğrulama Kodu',
+            subject: 'Togg Charge Tracker - E-posta Doğrulama Kodu',
         );
     }
 

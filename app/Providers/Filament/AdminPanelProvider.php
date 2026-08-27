@@ -30,7 +30,11 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('EV Sarj Takip')
+            ->brandName('Togg Charge Tracker')
+            ->brandLogo(asset('images/logo-icon.png'))
+            ->darkModeBrandLogo(asset('images/logo-icon.png'))
+            ->brandLogoHeight('2.75rem')
+            ->favicon(asset('favicon.png'))
             ->colors([
                 'primary' => Color::hex('#10b981'),
                 'secondary' => Color::hex('#6366f1'),

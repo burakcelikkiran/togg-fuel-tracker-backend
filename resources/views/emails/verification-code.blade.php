@@ -21,8 +21,15 @@
         }
         .header {
             background: linear-gradient(135deg, #1EA885 0%, #158A6F 100%);
-            padding: 40px 30px;
+            padding: 32px 30px;
             text-align: center;
+        }
+        .header img {
+            display: block;
+            margin: 0 auto 16px;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
         }
         .header h1 {
             color: #ffffff;
@@ -98,12 +105,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>⚡ EV Şarj Takip</h1>
+            <img src="{{ asset('images/logo-icon.png') }}" alt="Togg Charge Tracker" width="88" height="88">
+            <h1>Togg Charge Tracker</h1>
         </div>
         <div class="content">
             <p class="greeting">Merhaba {{ $name }},</p>
             <p class="message">
-                EV Şarj Takip uygulamasına hoş geldiniz! Hesabınızı doğrulamak için aşağıdaki 6 haneli kodu kullanın.
+                Togg Charge Tracker uygulamasına hoş geldiniz! Hesabınızı doğrulamak için aşağıdaki 6 haneli kodu kullanın.
             </p>
             <div class="code-container">
                 <div class="code-label">Doğrulama Kodu</div>
@@ -117,7 +125,7 @@
             </p>
         </div>
         <div class="footer">
-            <p>© {{ date('Y') }} EV Şarj Takip. Tüm hakları saklıdır.</p>
+            <p>© {{ date('Y') }} Togg Charge Tracker. Tüm hakları saklıdır.</p>
         </div>
     </div>
 </body>
