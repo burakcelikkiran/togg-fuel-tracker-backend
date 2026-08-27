@@ -1,4 +1,4 @@
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/Layouts/AppSidebar';
 import { Vehicle, PageProps } from '@/types';
 import { usePage } from '@inertiajs/react';
@@ -16,16 +16,14 @@ export default function AppLayout({ children, vehicles, activeVehicle }: AppLayo
 
     return (
         <SidebarProvider>
-            <div className="flex min-h-screen w-full">
-                <AppSidebar vehicles={layoutVehicles} activeVehicle={layoutActiveVehicle} />
-                <main className="flex-1 overflow-auto">
-                    <header className="flex h-14 items-center border-b border-border px-4 lg:hidden">
-                        <SidebarTrigger />
-                        <span className="ml-3 font-semibold text-foreground">EV Şarj Takip</span>
-                    </header>
-                    <div className="p-4 md:p-6 lg:p-8">{children}</div>
-                </main>
-            </div>
+            <AppSidebar vehicles={layoutVehicles} activeVehicle={layoutActiveVehicle} />
+            <SidebarInset>
+                <header className="flex h-14 shrink-0 items-center border-b border-border px-4 md:hidden">
+                    <SidebarTrigger />
+                    <span className="ml-3 font-semibold text-foreground">EV Şarj Takip</span>
+                </header>
+                <div className="flex-1 p-4 md:p-6 lg:p-8">{children}</div>
+            </SidebarInset>
         </SidebarProvider>
     );
 }
